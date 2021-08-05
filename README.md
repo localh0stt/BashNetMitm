@@ -12,7 +12,7 @@
 
 *If you face any errors/bugs let me know in the issues section, thanks for leaving me a star
 
-Coded by localh0st
+Coded by localh0st  
 https://linktr.ee/localh0st  
 https://www.twitter.com/localh0stt  
 https://www.youtube.com/channel/UC1IrUnnFh4HP4cHh6UbJ0AQ
