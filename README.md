@@ -1,2 +1,16 @@
-# BashNetMitm
-This tool is 100% written in bash script, used to perform two-way ARP spoofing on 255 targets of a certain network, also for two purposes that are MITM or Cutting off internet access.
+# BashNetMitm V1.0
+*This tool is 100% written in bash script, used to perform two-way ARP spoofing on 255 targets of a certain network, also for two purposes that are MITM or Cutting off internet access.
+
+*It also can be used to cut the connection off these devices by turning off the ipv4 forward (accessible in the tool)
+
+*How to set the tool up and use it :  
+    git clone https://github.com/localh0stt/BashNetMitm  
+    cd BashNetMitms  
+    sudo bash BashNetMitm.sh
+
+*Please use this tool for educational purposes. And don't steal the code without copyrights NERD!
+
+coded by localh0st
+https://linktr.ee/localh0st
+https://www.twitter.com/localh0stt
+https://www.youtube.com/channel/UC1IrUnnFh4HP4cHh6UbJ0AQ
