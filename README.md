@@ -10,7 +10,7 @@
 
 *Please use this tool for educational purposes. And don't steal the code without copyrights NERD!
 
-coded by localh0st
+Coded by localh0st
 https://linktr.ee/localh0st
 https://www.twitter.com/localh0stt
 https://www.youtube.com/channel/UC1IrUnnFh4HP4cHh6UbJ0AQ
