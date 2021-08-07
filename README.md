@@ -6,7 +6,8 @@
 *How to set the tool up and use it :  
   $  git clone https://github.com/localh0stt/BashNetMitm  
   $ cd BashNetMitms  
-  $ sudo bash BashNetMitm.sh
+  $ chmod +x BashNetMitm.sh
+  $ sudo ./BashNetMitm.sh
 
 *Please use this tool for educational purposes. And don't steal the code without copyrights NERD!  
 
