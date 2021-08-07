@@ -13,6 +13,8 @@
 
 *If you face any errors/bugs let me know in the issues section, thanks for leaving me a star
 
+TUTORIAL AND DEMO VIDEO : https://https://www.youtube.com/watch?v=yL09rs5QlH0  
+
 Coded by localh0st  
 https://linktr.ee/localh0st  
 https://www.twitter.com/localh0stt  
