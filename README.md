@@ -9,11 +9,11 @@
   $ chmod +x BashNetMitm.sh   
   $ sudo ./BashNetMitm.sh
 
-*Please use this tool for educational purposes. And don't steal the code without copyrights NERD!  
+*Please use this tool for educational purposes. And don't steal the code without copyrights!  
 
 *If you face any errors/bugs let me know in the issues section, thanks for leaving me a star
 
-TUTORIAL AND DEMO VIDEO : https://https://www.youtube.com/watch?v=yL09rs5QlH0  
+TUTORIAL AND DEMO VIDEO : https://www.youtube.com/watch?v=yL09rs5QlH0  
 
 Coded by localh0st  
 https://linktr.ee/localh0st  
