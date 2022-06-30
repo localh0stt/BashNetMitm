@@ -119,12 +119,12 @@ while [ $EXCEPTION_STTS != Y ] && [ $EXCEPTION_STTS != y ] && [ $EXCEPTION_STTS 
 if [ $EXCEPTION_STTS == "y" ] || [ $EXCEPTION_STTS == "Y" ]
 
   then 
-    printf "Enter the 4th byte of the exception device (Example 154 for 192.168.1.154) \033[0;91m$(tput blink)---> $Color_Off"
+    printf "Enter the 4th byte from the IP of the exception device (Example 154 for 192.168.1.154) \033[0;91m$(tput blink)---> $Color_Off"
     read Fbyte
     while [ "$Fbyte" -gt 254 ] || [ "$Fbyte" -lt 1 ]
       do 
         printf "\033[0;91mWrong input, retry again\033[0m \n"
-        printf "Enter the 4th byte of the exception device (Example 154 for 192.168.1.154) \033[0;91m$(tput blink)---> $Color_Off"
+        printf "Enter the 4th byte from the IP of the exception device (Example 154 for 192.168.1.154) \033[0;91m$(tput blink)---> $Color_Off"
         read Fbyte
       done
 elif [ $EXCEPTION_STTS == "n" ] || [ $EXCEPTION_STTS == "N" ]
