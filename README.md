@@ -9,7 +9,7 @@
   $ chmod +x BashNetMitm.sh   
   $ sudo ./BashNetMitm.sh
 
-*Please use this tool for educational purposes. And don't steal the code without copyrights!  
+*Please use this tool for educational purposes
 
 *If you face any errors/bugs let me know in the issues section, thanks for leaving me a star
 
